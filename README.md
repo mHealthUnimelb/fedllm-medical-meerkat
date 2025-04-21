@@ -43,8 +43,8 @@ When bf16 and tf32 are enabled, model weights are stored in bf16 format, while g
 ### Evaluation Results
 
 - **pubmedqa**: 0.3600
-- **medqa**: 0.1367
-- **medmcqa**: 0.2577
+- **medmcqa**: 0.1367
+- **medqa**: 0.2577
 - **careqa**: 0.1376
 - **average**: 0.2230
 

@@ -9,7 +9,7 @@ which allows users to perform the training on a single GPU.
 
 The fine-tuning results have been submitted as a PEFT adapter and can be accessed here:
 
-- [FlowerTune-meerkat-7b-Instruct-Medical-PEFT](https://huggingface.co/mrs83/FlowerTune-Qwen2.5-7B-Instruct-Medical-PEFT)
+- [FlowerTune-meerkat-7b-Instruct-Medical-PEFT](https://github.com/mHealthUnimelb/fedllm-medical-meerkat/tree/main/flowertune-eval-medical/peft_40)
 
 ## Methodology
 

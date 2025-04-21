@@ -1,6 +1,6 @@
 # FlowerTune LLM on Medical Dataset
 
-This directory conducts federated instruction tuning with a pretrained [Qwen2.5-7B-Instruct](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct) model on a [Medical dataset](https://huggingface.co/datasets/medalpaca/medical_meadow_medical_flashcards).
+This directory conducts federated instruction tuning with a pretrained [dmis-lab/meerkat-7b-v1.0](https://huggingface.co/dmis-lab/meerkat-7b-v1.0) model on a [Medical dataset](https://huggingface.co/datasets/medalpaca/medical_meadow_medical_flashcards).
 We use [Flower Datasets](https://flower.dev/docs/datasets/) to download, partition and preprocess the dataset.
 Flower's Simulation Engine is used to simulate the LLM fine-tuning process in federated way,
 which allows users to perform the training on a single GPU.
@@ -9,16 +9,16 @@ which allows users to perform the training on a single GPU.
 
 The fine-tuning results have been submitted as a PEFT adapter and can be accessed here:
 
-- [FlowerTune-Qwen2.5-7B-Instruct-Medical-PEFT](https://huggingface.co/mrs83/FlowerTune-Qwen2.5-7B-Instruct-Medical-PEFT)
+- [FlowerTune-meerkat-7b-Instruct-Medical-PEFT](https://huggingface.co/mrs83/FlowerTune-Qwen2.5-7B-Instruct-Medical-PEFT)
 
 ## Methodology
 
 This experiment performs federated LLM fine-tuning with [LoRA](https://arxiv.org/pdf/2106.09685) using the [🤗PEFT](https://huggingface.co/docs/peft/en/index) library.
 The clients' models are aggregated with FedProx strategy.
 
-### Qwen2.5-7B-Instruct
+### meerkat-7b-v1.0
 
-For the **Qwen-2.5 7B Instruct** model, we adopted the following fine-tuning methodology:
+For the **Meerkat-7b-v1.0 Instruct** model, we adopted the following fine-tuning methodology:
 
 - **Precision**: bf16 for model weights, tf32 for gradients and optimizer states.
 - **Quantization**: 4-bit quantization for reduced memory usage.
@@ -40,24 +40,17 @@ For the **Qwen-2.5 7B Instruct** model, we adopted the following fine-tuning met
 
 When bf16 and tf32 are enabled, model weights are stored in bf16 format, while gradients are computed in half-precision and converted to full 32-bit precision for updates.
 
-### Training Loss Visualization
-
-Below is the training loss plot from the experiment:
-
-![Training Loss](flowertune-eval-medical/benchmarks/train_loss.png)
-
-This methodology enabled efficient fine-tuning within constrained resources while ensuring competitive performance.
-
 ### Evaluation Results
 
-- **pubmedqa**: 0.446
-- **medqa**: 0.5546
-- **medmcqa**: 0.3906
-- **average**: 0.4637
+- **pubmedqa**: 0.3600
+- **medqa**: 0.1367
+- **medmcqa**: 0.2577
+- **careqa**: 0.1376
+- **average**: 0.2230
 
 ### Communication Budget
 
-46228 Megabytes
+3084.70 Megabytes
 
 ## Environments setup
 
@@ -85,17 +78,6 @@ The configs are defined in `[tool.flwr.app.config]` entry of `pyproject.toml`, a
 ```bash
 flwr run
 ```
-
-## VRAM consumption
-
-We use Mistral-7B model with 4-bit quantization as default. The estimated VRAM consumption per client for each challenge is shown below:
-
-| Challenges | GeneralNLP |   Finance  |   Medical  |    Code    |
-| :--------: | :--------: | :--------: | :--------: | :--------: |
-|    VRAM    | ~25.50 GB  | ~17.30 GB  | ~22.80 GB  | ~17.40 GB  |
-
-You can adjust the CPU/GPU resources you assign to each of the clients based on your device, which are specified with `options.backend.client-resources.num-cpus` and `options.backend.client-resources.num-gpus` under `[tool.flwr.federations.local-simulation]` entry in `pyproject.toml`.
-
 
 ## Model saving
 

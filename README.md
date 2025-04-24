@@ -31,7 +31,7 @@ For the **Meerkat-7b-v1.0 Instruct** model, we adopted the following fine-tuning
   - Batch size: 16
   - Maximum number of steps: 6
   - Warmup steps: 2
-  - Total number of rounds: 100
+  - Total number of rounds: 40
   - Fraction fit per round: 0.15
 - **Learning Rate Scheduler**: Constant learning rate scheduler with warmup steps, where:
   - Maximum LR: 5e-5
